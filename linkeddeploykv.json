@@ -22,6 +22,12 @@
                 "description": "Resoruce group containing key vault"
             }
         },
+        "vaultName": {
+            "type": "string",
+            "metadata": {
+                "description": "Key vault name"
+            }
+        },
         "vmAdminPassword": {
             "type": "string",
             "metadata": {
@@ -55,20 +61,20 @@
                         "value": "[parameters('vmAdminUserName')]"
                     },
                     "vmAdminPassword": {
-                      "reference": {
-                        "keyVault": {
-                          "id": "[resourceId(subscription().subscriptionId,  parameters('vaultResourceGroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
-                        },
-                        "secretName": "[parameters('vmAdminPassword')]"
-                      }
+                        "reference": {
+                            "keyVault": {
+                                "id": "[resourceId(subscription().subscriptionId,  parameters('vaultResourceGroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
+                            },
+                            "secretName": "[parameters('vmAdminPassword')]"
+                        }
                     },
                     "aDSafeModePassword": {
-                      "reference": {
-                        "keyVault": {
-                          "id": "[resourceId(subscription().subscriptionId,  parameters('vaultResourceGroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
-                        },
-                        "secretName": "[parameters('aDSafeModePassword')]"
-                      }
+                        "reference": {
+                            "keyVault": {
+                                "id": "[resourceId(subscription().subscriptionId,  parameters('vaultResourceGroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
+                            },
+                            "secretName": "[parameters('aDSafeModePassword')]"
+                        }
                     }
                 }
             }
