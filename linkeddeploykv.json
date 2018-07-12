@@ -1,0 +1,78 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "domainName": {
+            "type": "string",
+            "defaultValue": "contoso.local",
+            "metadata": {
+                "description": "Active Directory domain name"
+            }
+        },
+        "vmAdminUserName": {
+            "type": "string",
+            "defaultValue": "adminuser",
+            "metadata": {
+                "description": "Virtual machine administrator account name"
+            }
+        },
+        "vaultResourceGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "Resoruce group containing key vault"
+            }
+        },
+        "vmAdminPassword": {
+            "type": "string",
+            "metadata": {
+                "description": "Key vault name"
+            }
+        },
+        "vaultResourceGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "Secret name for virtual machine administrator password"
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "apiVersion": "2017-05-10",
+            "name": "linkedTemplate",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/jomolesk/uk-official-three-tier-webapp/one-step-deploy/azuredeploy.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "domainName": {
+                        "value": "[parameters('domainName')]"
+                    },
+                    "vmAdminUserName": {
+                        "value": "[parameters('vmAdminUserName')]"
+                    },
+                    "vmAdminPassword": {
+                      "reference": {
+                        "keyVault": {
+                          "id": "[resourceId(subscription().subscriptionId,  parameters('vaultResourceGroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
+                        },
+                        "secretName": "[parameters('vmAdminPassword')]"
+                      }
+                    },
+                    "aDSafeModePassword": {
+                      "reference": {
+                        "keyVault": {
+                          "id": "[resourceId(subscription().subscriptionId,  parameters('vaultResourceGroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
+                        },
+                        "secretName": "[parameters('aDSafeModePassword')]"
+                      }
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}
