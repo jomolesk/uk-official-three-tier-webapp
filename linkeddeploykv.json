@@ -25,13 +25,13 @@
         "vmAdminPassword": {
             "type": "string",
             "metadata": {
-                "description": "Key vault name"
+                "description": "Secret name for Virtual machine administrator password"
             }
         },
-        "vaultResourceGroup": {
+        "aDSafeModePassword": {
             "type": "string",
             "metadata": {
-                "description": "Secret name for virtual machine administrator password"
+                "description": "Secret name for Active Directory Safemode password"
             }
         }
     },
