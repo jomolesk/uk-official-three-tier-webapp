@@ -1,7 +1,34 @@
 {
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {},
+    "parameters": {
+        "domainName": {
+            "type": "string",
+            "defaultValue": "contoso.local",
+            "metadata": {
+                "description": "Active Directory domain name"
+            }
+        },
+        "vmAdminUserName": {
+            "type": "string",
+            "defaultValue": "adminuser",
+            "metadata": {
+                "description": "Virtual machine administrator account name"
+            }
+        },
+        "vmAdminPassword": {
+            "type": "secureString",
+            "metadata": {
+                "description": "Virtual machine admin password"
+            }
+        },
+        "aDSafeModePassword": {
+            "type": "secureString",
+            "metadata": {
+                "description": "Active Directory Safemode password"
+            }
+        }
+    },
     "variables": {},
     "resources": [
         {
@@ -15,6 +42,12 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
+                    "domainName": {
+                        "value": "[parameters('domainName')]"
+                    },
+                    "vmAdminUserName": {
+                        "value": "[parameters('vmAdminUserName')]"
+                    },
                     "vmAdminPassword": {
                         "value": "[parameters('vmAdminPassword')]"
                     },
